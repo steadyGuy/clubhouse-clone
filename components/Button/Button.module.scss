@@ -1,0 +1,59 @@
+$primaryColor: #5677ad;
+$successColor: #20bd5f;
+$grayColor: #f2f2f2;
+
+.button {
+  height: 48px;
+  background-color: $primaryColor;
+  border-radius: 30px;
+  color: #fff;
+  border: 0;
+  padding: 0 30px;
+  font-size: 18px;
+  cursor: pointer;
+
+  &:disabled,
+  &:disabled:hover {
+    background-color: #cdcbc4;
+    cursor: default;
+  }
+
+  &:hover {
+    background-color: lighten($primaryColor, 2%);
+  }
+
+  &:active {
+    background-color: darken($primaryColor, 1%);
+    transform: translateY(1px);
+  }
+}
+
+.buttonSucess {
+  background-color: $successColor;
+
+  &:hover,
+  &:active {
+    background-color: darken($successColor, 2%);
+  }
+}
+
+.buttonGray {
+  background-color: $grayColor;
+  color: #323232;
+
+  &:hover,
+  &:active {
+    background-color: darken($grayColor, 2%);
+  }
+}
+
+.buttonBlue {
+  background-color: transparent;
+  color: #5677ad;
+  border: 2px solid #5677ad;
+
+  &:hover,
+  &:active {
+    background-color: darken($grayColor, 2%);
+  }
+}
