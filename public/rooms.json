@@ -1,0 +1,148 @@
+[
+  {
+    "id": "6071ecabceb0605cbc2e25d6",
+    "avatars": [
+      "https://source.unsplash.com/random/100x100?=31"
+    ],
+    "guestsCount": 229,
+    "speakersCount": 6,
+    "title": "Reprehenderit occaecat officia qui esse magna culpa aliquip eu aute labore eiusmod eu.",
+    "guests": [
+      "Its Mario",
+      "Vasya Pupkin",
+      "Генадий Бовадий"
+    ]
+  },
+  {
+    "id": "6071ecab4e129664ec85d488",
+    "avatars": [
+      "https://source.unsplash.com/random/100x100?=133",
+      "https://source.unsplash.com/random/100x100?=213"
+    ],
+    "guestsCount": 157,
+    "speakersCount": 3,
+    "title": "Fugiat reprehenderit ea ut Lorem ea voluptate voluptate pariatur tempor ipsum.",
+    "guests": [
+      "Зубенко Михаил",
+      "Hello World",
+      "Its Mario"
+    ]
+  },
+  {
+    "id": "6071ecabfe47fbb1dc13e0ed",
+    "avatars": [
+      "https://source.unsplash.com/random/100x100?=232"
+    ],
+    "guestsCount": 15,
+    "speakersCount": 7,
+    "title": "Tempor ipsum dolore non commodo irure.",
+    "guests": [
+      "Мафиозник",
+      "Наши полномочие всё",
+      "Наши полномочие всё"
+    ]
+  },
+  {
+    "id": "6071ecab9364fe76fe80d583",
+    "avatars": [
+      "https://source.unsplash.com/random/100x100?111",
+      "https://source.unsplash.com/random/100x100?222"
+    ],
+    "guestsCount": 54,
+    "speakersCount": 12,
+    "title": "Commodo veniam reprehenderit aute anim do.",
+    "guests": [
+      "Vasya Pupkin",
+      "Мафиозник",
+      "Генадий Бовадий"
+    ]
+  },
+  {
+    "id": "6071ecab5bc2928e22042257",
+    "avatars": [
+      "https://source.unsplash.com/random/100x100?333",
+      "https://source.unsplash.com/random/100x100?99"
+    ],
+    "guestsCount": 274,
+    "speakersCount": 13,
+    "title": "Ullamco mollit cupidatat adipisicing nisi commodo occaecat cupidatat commodo fugiat irure.",
+    "guests": [
+      "Зубенко Михаил",
+      "Наши полномочие всё",
+      "Vasya Pupkin"
+    ]
+  },
+  {
+    "id": "6071ecab1b81c7b1b7b7eac3",
+    "avatars": [
+      "https://source.unsplash.com/random/100x100?15"
+    ],
+    "guestsCount": 201,
+    "speakersCount": 8,
+    "title": "Esse irure commodo ex Lorem ea nostrud sit incididunt eu amet qui nulla.",
+    "guests": [
+      "Генадий Бовадий",
+      "Наши полномочие всё",
+      "Its Mario"
+    ]
+  },
+  {
+    "id": "6071ecabc2cddd4c512bcdbd",
+    "avatars": [
+      "https://source.unsplash.com/random/100x100?14",
+      "https://source.unsplash.com/random/100x100?13"
+    ],
+    "guestsCount": 214,
+    "speakersCount": 4,
+    "title": "Anim ullamco tempor fugiat velit.",
+    "guests": [
+      "Генадий Бовадий",
+      "Зубенко Михаил",
+      "Мафиозник"
+    ]
+  },
+  {
+    "id": "6071ecabd1ae2d463ca513ea",
+    "avatars": [
+      "https://source.unsplash.com/random/100x100?12",
+      "https://source.unsplash.com/random/100x100?43"
+    ],
+    "guestsCount": 177,
+    "speakersCount": 6,
+    "title": "In labore eiusmod eiusmod ullamco id cillum nulla est culpa et eiusmod eu exercitation.",
+    "guests": [
+      "Наши полномочие всё",
+      "Наши полномочие всё",
+      "Зубенко Михаил"
+    ]
+  },
+  {
+    "id": "6071ecab20b1610db815ceab",
+    "avatars": [
+      "https://source.unsplash.com/random/100x100?1231"
+    ],
+    "guestsCount": 38,
+    "speakersCount": 7,
+    "title": "Fugiat sint aliquip ut nostrud veniam dolore minim nisi et culpa ut.",
+    "guests": [
+      "Hello World",
+      "Наши полномочие всё",
+      "Hello World"
+    ]
+  },
+  {
+    "id": "6071ecab04d823adf0b9c27a",
+    "avatars": [
+      "https://source.unsplash.com/random/100x100?123",
+      "https://source.unsplash.com/random/100x100?12"
+    ],
+    "guestsCount": 134,
+    "speakersCount": 3,
+    "title": "Incididunt commodo nisi proident consectetur culpa excepteur reprehenderit.",
+    "guests": [
+      "Зубенко Михаил",
+      "Наши полномочие всё",
+      "Hello World"
+    ]
+  }
+]

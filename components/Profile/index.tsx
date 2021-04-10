@@ -1,10 +1,10 @@
 import clsx from 'clsx'
 import React, { FC } from 'react'
-import Link from "next/link";
 import Avatar from '../Avatar'
 import { Button } from '../Button'
 
 import styles from './Profile.module.scss'
+import { BackButton } from '../BackButton';
 
 interface ProfileProps {
   fullname: string;
@@ -16,12 +16,7 @@ interface ProfileProps {
 export const Profile: FC<ProfileProps> = ({ fullname, username, avatarUrl, about }) => {
   return (
     <div className="container mt-25">
-      <Link href="/rooms">
-        <div className={clsx('d-flex align-items-c cup mb-20', styles.topLine)}>
-          <img src="/static/left-arrow.svg" alt="Back arrow" className="mr-10" />
-          <h3>Back</h3>
-        </div>
-      </Link>
+      <BackButton title="Back" href="/rooms" />
       <div className="d-flex align-items-c">
         <Avatar
           src={avatarUrl}
