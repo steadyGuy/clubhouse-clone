@@ -8,12 +8,15 @@ import { WhiteBlock } from '../../WhiteBlock'
 import styles from './EnterNameStep.module.scss';
 
 export const EnterNameStep = () => {
-  const { onNextStep } = useContext(MainContext);
-  const [inputValue, setInputValue] = useState('');
+  const { onNextStep, user, setFieldValue } = useContext(MainContext);
+  const [inputValue, setInputValue] = useState(user.displayName);
   const nextDisabled = inputValue.length < 4;
+
   const handleNextClick = () => {
+    setFieldValue('displayName', inputValue);
     onNextStep();
   }
+
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
   }
@@ -27,7 +30,7 @@ export const EnterNameStep = () => {
       />
       <WhiteBlock className={clsx('m-auto', styles.whiteBlock)}>
         <div className="mb-30 text-center">
-          <input onChange={handleChangeInput} className="field" placeholder="Enter fullname" value={inputValue} />
+          <input autoFocus={true} onChange={handleChangeInput} className="field" placeholder="Enter fullname" value={inputValue} />
         </div>
         <Button disabled={nextDisabled} onClick={handleNextClick} className="m-auto d-flex align-items-c justify-content-c">
           Next
