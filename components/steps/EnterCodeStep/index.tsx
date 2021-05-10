@@ -26,16 +26,21 @@ export const EnterCodeStep = () => {
 
     if (e.target.nextElementSibling) {
       (e.target.nextElementSibling as HTMLElement).focus();
+    } else {
+      handleOnSubmit([...codes, value].join(''));
     }
   }
 
-  const handleOnSubmit = async () => {
+  const handleOnSubmit = async (code: string) => {
     try {
       setIsLoadig(true);
-      await axios.get('/todos');
+      const info = await axios.get(`/auth/sms/activate?code=${code}`);
+      console.log('OVER HERE!', info);
       router.push('/rooms');
     } catch (err) {
       alert(err);
+      setCodes([]);
+      setIsLoadig(false);
     }
   }
 
@@ -45,23 +50,25 @@ export const EnterCodeStep = () => {
         !isLoadig ?
           <>
             <StepInfo icon="/static/numbers.svg" title="Enter your activation code" />
-            <WhiteBlock className={clsx('m-auto', styles.whiteBlock)}>
+            <WhiteBlock className={clsx('m-auto mt-30', styles.whiteBlock)}>
               <div className={clsx('mb-30', styles.codeInput)}>
                 {[1, 2, 3, 4].map((idx) => (
                   <input
+                    autoFocus={idx === 1}
                     type="tel"
                     placeholder="X"
                     maxLength={1}
                     id={idx.toString()}
                     onChange={handleChangeInput}
                     value={codes[idx - 1] || ''}
+                    key={idx}
                   />
                 ))}
               </div>
-              <Button onClick={handleOnSubmit} disabled={nextDisabled} className="m-auto d-flex align-items-c justify-content-c">
+              {/* <Button onClick={handleOnSubmit} disabled={nextDisabled} className="m-auto d-flex align-items-c justify-content-c">
                 Next
           <img className="d-ib ml-10" src="/static/arrow.svg" alt="Right arrow" />
-              </Button>
+              </Button> */}
               <p className={clsx(styles.policyText, 'mt-30')}>
                 By entering your number, you're agreeing to our Terms of Service and Privacy Policy. Thanks!
               </p>

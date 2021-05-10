@@ -1,11 +1,12 @@
 import Head from 'next/head'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ChooseAvatarStep } from '../components/steps/ChooseAvatarStep';
 import { EnterCodeStep } from '../components/steps/EnterCodeStep';
 import { EnterNameStep } from '../components/steps/EnterNameStep';
 import { EnterPhoneStep } from '../components/steps/EnterPhoneStep';
 import { SteamStep } from '../components/steps/SteamStep';
 import { WelcomeStep } from '../components/steps/WelcomeStep'
+import { checkAuth } from '../utils/checkAuth';
 
 const stepsComponents = {
   1: WelcomeStep,
@@ -33,6 +34,19 @@ type MainContextProps = {
   user: User;
 }
 
+const getFormStep = () => {
+  const data = localStorage.getItem('user');
+  if (data) {
+    const json: User = JSON.parse(data);
+    if (json.phone) {
+      return 6;
+    } else {
+      return 5;
+    }
+  }
+  return 1;
+}
+
 export const MainContext = React.createContext<MainContextProps>({} as MainContextProps);
 
 export default function Home() {
@@ -56,7 +70,18 @@ export default function Home() {
     }));
   }
 
-  console.log(user);
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setUserData(JSON.parse(localStorage.getItem('user')))
+      setStep(getFormStep());
+    }
+  }, [])
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem('user', JSON.stringify(user));
+    }
+  }, [user])
 
   return (
     <MainContext.Provider value={{ step, onNextStep, setUserData, user, setFieldValue }}>
@@ -66,4 +91,25 @@ export default function Home() {
       <Step />
     </MainContext.Provider>
   )
+}
+
+export const getServerSideProps = async (ctx) => {
+  try {
+    const user = await checkAuth(ctx);
+
+    if (user) {
+      return {
+        props: {},
+        redirect: {
+          destination: '/rooms',
+          permanent: false,
+        }
+      }
+    }
+
+    return { props: {} };
+
+  } catch (error) {
+
+  }
 }

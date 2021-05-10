@@ -9,14 +9,19 @@ interface AvatarProps {
   height: string;
   className?: string;
   isVoice?: boolean;
+  letters?: Array<string>;
 }
 
-const Avatar: FC<AvatarProps> = ({ src, width, height, className, isVoice }) => {
+const Avatar: FC<AvatarProps> = ({ src, width, height, className, isVoice, letters }) => {
+
   return (
     <div
-      style={{ width, height, backgroundImage: `url(${src})`, backgroundSize: 'cover' }}
-      className={clsx(styles.avatar, isVoice ? styles.avatarBorder : '')}
+      style={{ width, height, backgroundImage: src ? `url(${src})` : '', backgroundSize: 'cover' }}
+      className={clsx(styles.avatar, className, isVoice ? styles.avatarBorder : '', {
+        [styles.emptyAvatar]: !src
+      })}
     >
+      {!src ? letters : null}
     </div>
   )
 }

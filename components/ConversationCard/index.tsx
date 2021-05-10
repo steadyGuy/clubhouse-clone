@@ -7,13 +7,13 @@ import Avatar from '../Avatar';
 
 interface ConversationCardProps {
   title: string;
-  guests: Array<string>;
+  speakers: Array<string>;
   avatars: Array<string>;
-  guestsCount: number;
+  listenersCount: number;
   speakersCount: number;
 }
 
-const ConversationCard: FC<ConversationCardProps> = ({ title, guests = [], avatars = [], guestsCount, speakersCount, }) => {
+const ConversationCard: FC<ConversationCardProps> = ({ title, speakers = [], avatars = [], listenersCount, speakersCount, }) => {
   return (
     <div className={clsx(whiteBlockStyles.block, styles.card)}>
       <h4 className={styles.title}>{title}</h4>
@@ -31,7 +31,7 @@ const ConversationCard: FC<ConversationCardProps> = ({ title, guests = [], avata
         </div>
         <div className={clsx(styles.info, 'ml-10')}>
           <ul className={styles.guests}>
-            {guests.map((name) => (
+            {speakers.map((name) => (
               <li key={name + Math.random().toString()}>
                 {name} <img src="/static/cloud.png" alt="Cloud" width={14} height={14} />
               </li>
@@ -39,10 +39,10 @@ const ConversationCard: FC<ConversationCardProps> = ({ title, guests = [], avata
           </ul>
           <ul className={clsx(styles.details, 'mt-5')}>
             <li>
-              {guestsCount} <img src="/static/user.svg" alt="User count" width={12} height={12} />
+              {listenersCount} <img src="/static/user.svg" alt="User count" width={12} height={12} />
             </li>
             <li className="ml-10">
-              {speakersCount} <img
+              {speakers.length} <img
                 src="/static/message.svg"
                 alt="User count"
                 width={12}

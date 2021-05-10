@@ -2,12 +2,14 @@ import clsx from 'clsx';
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { Api } from '../../api';
 import { BackButton } from '../../components/BackButton';
 import { Header } from '../../components/Header/Header';
 import { Room } from '../../components/Room/Room';
 import axios from '../../core/axios';
 
 export default function RoomPage({ room }) {
+  console.log('room', room)
   return (
     <>
       <Head>
@@ -24,8 +26,8 @@ export default function RoomPage({ room }) {
 
 export const getServerSideProps = async (ctx) => {
   try {
-    const { data } = await axios.get('/rooms.json');
-    const room = data.find(room => room.id === ctx.query.slug)
+    const { slug } = ctx.query;
+    const room = await Api(ctx).getRoom(slug);
     return {
       props: {
         room,
@@ -34,8 +36,10 @@ export const getServerSideProps = async (ctx) => {
   } catch (err) {
     console.log(err);
     return {
-      props: {
-        room: {}
+      props: {},
+      redirect: {
+        destination: '/rooms',
+        permanent: false,
       }
     }
   }

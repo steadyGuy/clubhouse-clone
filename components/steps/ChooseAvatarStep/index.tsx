@@ -26,7 +26,8 @@ const uploadFile = async (imageBlob: Blob): Promise<string> => {
 
 export const ChooseAvatarStep: FC = () => {
   const { onNextStep, setFieldValue, user } = useContext(MainContext);
-  const [avatar, setAvatar] = useState<Avatar>({ url: 'https://cdn.pixabay.com/photo/2016/01/19/17/19/young-woman-1149643_960_720.jpg' });
+  const avatarLetters = user.displayName.split(' ').map(name => name[0]);
+  const [avatar, setAvatar] = useState<Avatar>({ url: user.avatarUrl });
   const inputFileRef = useRef<HTMLInputElement>(null);
 
   const handleChangeImage = (e: Event) => {
@@ -38,9 +39,12 @@ export const ChooseAvatarStep: FC = () => {
   };
 
   const handleNextStep = async () => {
-    const url = await uploadFile(avatar.blob);
-    setFieldValue('avatarUrl', url);
-    URL.revokeObjectURL(avatar.url);
+    if (avatar.blob) {
+      const url = await uploadFile(avatar.blob);
+      setFieldValue('avatarUrl', url);
+      URL.revokeObjectURL(avatar.url);
+    }
+
     inputFileRef.current.removeEventListener('change', handleChangeImage);
     onNextStep();
   }
@@ -63,6 +67,7 @@ export const ChooseAvatarStep: FC = () => {
           <Avatar
             width="120px"
             height="120px"
+            letters={avatarLetters}
             src={avatar.url}
           />
         </div>

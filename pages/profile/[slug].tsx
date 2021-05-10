@@ -11,8 +11,6 @@ export default function ProfilePage() {
   const router = useRouter();
   const { slug } = router.query;
 
-
-  console.log(slug);
   return (
     <>
       <Head>
