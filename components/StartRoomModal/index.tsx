@@ -1,11 +1,12 @@
 import clsx from 'clsx'
 import React, { FC, useState } from 'react'
-import { RoomApi, RoomType } from '../../api/RoomApi';
+import { Room, RoomType } from '../../api/RoomApi';
 import { Button } from '../Button'
-import axios from '../../core/axios';
 
 import styles from './StartRoomModal.module.scss'
 import { useRouter } from 'next/router';
+import { fetchCreateRoom } from '../../redux/slices/roomsSlice';
+import { useAsyncAction } from '../../hooks/useAction';
 
 interface StartRoomModalProps {
   onClose: any;
@@ -14,19 +15,15 @@ interface StartRoomModalProps {
 export const StartRoomModal: FC<StartRoomModalProps> = ({ onClose }) => {
   const router = useRouter();
   const [form, setForm] = useState<{ title: string; type: RoomType }>({ title: '', type: 'open' })
+  const createRoom = useAsyncAction(fetchCreateRoom);
 
   const onSubmit = async () => {
-    try {
-      if (!form.title) {
-        return alert('Укажите заголовок комнаты!');
-      }
-      const room = await RoomApi(axios).createRoom(form)
-      onClose();
-      router.push(`/rooms/${room.id}`);
-    } catch (error) {
-      alert('Ошибка при создании комнаты');
-      console.log(error);
+    if (!form.title) {
+      return alert('Укажите заголовок комнаты!');
     }
+    const room: Room = await createRoom(form);
+    onClose();
+    router.push(`/rooms/${room.id}`);
   }
 
   const onChangeField = (name: string, value: string) => {

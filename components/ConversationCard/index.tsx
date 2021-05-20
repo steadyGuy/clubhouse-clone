@@ -10,10 +10,9 @@ interface ConversationCardProps {
   speakers: Array<string>;
   avatars: Array<string>;
   listenersCount: number;
-  speakersCount: number;
 }
 
-const ConversationCard: FC<ConversationCardProps> = ({ title, speakers = [], avatars = [], listenersCount, speakersCount, }) => {
+const ConversationCard: FC<ConversationCardProps> = ({ title, speakers = [], avatars = [], listenersCount }) => {
   return (
     <div className={clsx(whiteBlockStyles.block, styles.card)}>
       <h4 className={styles.title}>{title}</h4>

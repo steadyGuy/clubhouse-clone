@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Api } from '../api'
 import { Room, RoomType } from '../api/RoomApi'
 import { Button } from '../components/Button'
@@ -11,14 +12,15 @@ import { Header } from '../components/Header/Header'
 import { StartRoomModal } from '../components/StartRoomModal'
 
 import axios from '../core/axios';
+import { setRooms } from '../redux/slices/roomsSlice'
+import { selectRooms } from '../redux/slices/selectors'
+import { wrapper } from '../redux/store'
 import { checkAuth } from '../utils/checkAuth'
 
-interface RoomPageProps {
-  rooms: Room[];
-}
-
-export default function Rooms({ rooms = [] }) {
+export default function Rooms() {
   const [visibleModal, setVisibleModal] = useState(false);
+  const rooms = useSelector(selectRooms);
+
 
   const handleSetModalVisibility = () => {
     setVisibleModal(!visibleModal);
@@ -55,7 +57,7 @@ export default function Rooms({ rooms = [] }) {
   )
 }
 
-export const getServerSideProps: GetServerSideProps<RoomPageProps> = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(async (ctx) => {
   const user = await checkAuth(ctx);
   if (!user) {
     return {
@@ -70,11 +72,9 @@ export const getServerSideProps: GetServerSideProps<RoomPageProps> = async (ctx)
   try {
     const rooms = await Api(ctx).getAllRooms();
     // const { data } = await axios.get('/rooms.json');
+    ctx.store.dispatch(setRooms(rooms))
     return {
-      props: {
-        rooms,
-        user
-      }
+      props: {}
     }
   } catch (err) {
     // console.error(err);
@@ -85,4 +85,4 @@ export const getServerSideProps: GetServerSideProps<RoomPageProps> = async (ctx)
       }
     }
   }
-}
+});

@@ -1,5 +1,5 @@
-@import "./display";
-@import "./spacing";
+@import './display';
+@import './spacing';
 
 html,
 body {
@@ -10,7 +10,7 @@ body {
 }
 
 * {
-  font-family: "Nunito", sans-serif;
+  font-family: 'Nunito', sans-serif;
   outline: none;
   box-sizing: border-box;
 }

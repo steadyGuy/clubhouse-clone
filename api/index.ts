@@ -6,7 +6,7 @@ import { RoomApi } from "./RoomApi";
 
 // type ApiReturnType = 
 
-export const Api = (ctx: GetServerSidePropsContext) => {
+export const Api = (ctx: any) => {
   const cookies = nookies.get(ctx);
   const { token } = cookies;
   const instance = axios.create({
