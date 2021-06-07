@@ -3,9 +3,9 @@ import { HYDRATE } from 'next-redux-wrapper';
 import router from 'next/router';
 import { Room, RoomApi, RoomType } from '../../api/RoomApi'
 import axios from '../../core/axios';
-import { RootState } from '../store';
+import { RootState } from '../types';
 
-interface RoomsState {
+export interface RoomsState {
   items: Room[]
 }
 
@@ -31,6 +31,14 @@ export const roomsSlice = createSlice({
     setRooms: (state, action: PayloadAction<Room[]>) => {
       state.items = action.payload;
     },
+    setRoomSpeakers: (state, action: PayloadAction<{ speakers: Room['speakers'], roomId: number }>) => {
+      state.items = state.items.map(room => {
+        if (room.id === action.payload.roomId) {
+          room.speakers = action.payload.speakers;
+        }
+        return room;
+      });
+    },
   },
   extraReducers: (builder) =>
     builder
@@ -44,7 +52,7 @@ export const roomsSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setRooms } = roomsSlice.actions;
+export const { setRooms, setRoomSpeakers } = roomsSlice.actions;
 
 export const roomsReducer = roomsSlice.reducer;
 

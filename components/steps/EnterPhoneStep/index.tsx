@@ -14,7 +14,6 @@ export const EnterPhoneStep = () => {
   const [values, setValues] = useState<NumberFormatValues>({} as NumberFormatValues);
   const [isLoading, setIsLoading] = useState(false)
   const nextDisabled = !values.formattedValue || values.formattedValue.includes('_');
-
   const onSubmit = async () => {
     try {
       setIsLoading(true);

@@ -42,6 +42,7 @@ export const ChooseAvatarStep: FC = () => {
     if (avatar.blob) {
       const url = await uploadFile(avatar.blob);
       setFieldValue('avatarUrl', url);
+
       URL.revokeObjectURL(avatar.url);
     }
 

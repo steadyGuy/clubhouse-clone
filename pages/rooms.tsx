@@ -1,30 +1,38 @@
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Api } from '../api'
-import { Room, RoomType } from '../api/RoomApi'
 import { Button } from '../components/Button'
 import ConversationCard from '../components/ConversationCard'
 import { Header } from '../components/Header/Header'
 import { StartRoomModal } from '../components/StartRoomModal'
 
-import axios from '../core/axios';
-import { setRooms } from '../redux/slices/roomsSlice'
-import { selectRooms } from '../redux/slices/selectors'
-import { wrapper } from '../redux/store'
-import { checkAuth } from '../utils/checkAuth'
+
+import { setRooms, setRoomSpeakers } from '../redux/slices/roomsSlice'
+import { selectRooms } from '../redux/selectors'
+import { enhancedServerSideProps } from '../utils/enhancedServerSideProps'
+import { useSocket } from '../hooks/useSocket'
 
 export default function Rooms() {
   const [visibleModal, setVisibleModal] = useState(false);
   const rooms = useSelector(selectRooms);
-
+  const dispatch = useDispatch();
+  const socket = useSocket();
 
   const handleSetModalVisibility = () => {
     setVisibleModal(!visibleModal);
   }
+
+  useEffect(() => {
+
+    socket.on('SERVER@ROOMS:HOME', ({ speakers, roomId }) => {
+      console.log(roomId, 'КОМНАТААА', speakers)
+      dispatch(setRoomSpeakers({ speakers, roomId }));
+    });
+
+  }, [])
 
   return (
     <>
@@ -45,7 +53,6 @@ export default function Rooms() {
             <a>
               <ConversationCard
                 title={room.title}
-                avatars={room.avatars}
                 listenersCount={room.listenersCount}
                 speakers={room.speakers}
               />
@@ -57,22 +64,11 @@ export default function Rooms() {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(async (ctx) => {
-  const user = await checkAuth(ctx);
-  if (!user) {
-    return {
-      props: {},
-      redirect: {
-        destination: '/',
-        permanent: false,
-      }
-    }
-  }
-
+export const getServerSideProps: GetServerSideProps = enhancedServerSideProps(async (ctx) => {
   try {
     const rooms = await Api(ctx).getAllRooms();
     // const { data } = await axios.get('/rooms.json');
-    ctx.store.dispatch(setRooms(rooms))
+    ctx.store.dispatch(setRooms(rooms));
     return {
       props: {}
     }
@@ -81,8 +77,8 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     return {
       props: {
         rooms: [],
-        user,
       }
     }
   }
 });
+

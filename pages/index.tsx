@@ -1,3 +1,5 @@
+import { AnyAction, Store } from '@reduxjs/toolkit';
+import { GetServerSidePropsContext } from 'next-redux-wrapper';
 import Head from 'next/head'
 import React, { useEffect, useState } from 'react'
 import { ChooseAvatarStep } from '../components/steps/ChooseAvatarStep';
@@ -6,7 +8,10 @@ import { EnterNameStep } from '../components/steps/EnterNameStep';
 import { EnterPhoneStep } from '../components/steps/EnterPhoneStep';
 import { SteamStep } from '../components/steps/SteamStep';
 import { WelcomeStep } from '../components/steps/WelcomeStep'
+import { wrapper } from '../redux/store';
+import { RootState } from '../redux/types';
 import { checkAuth } from '../utils/checkAuth';
+import { enhancedServerSideProps } from '../utils/enhancedServerSideProps';
 
 const stepsComponents = {
   1: WelcomeStep,
@@ -17,7 +22,7 @@ const stepsComponents = {
   6: EnterCodeStep,
 }
 
-type User = {
+export type User = {
   id: string;
   displayName: string;
   avatarUrl: string;
@@ -52,7 +57,7 @@ export const MainContext = React.createContext<MainContextProps>({} as MainConte
 export default function Home() {
 
   const [step, setStep] = useState<number>(1);
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<User | null | undefined>();
   const Step = stepsComponents[step];
 
   const onNextStep = () => {
@@ -64,15 +69,21 @@ export default function Home() {
   }
 
   const setFieldValue = (field: string, value: string | number) => {
-    setUser(prev => ({
-      ...prev,
-      [field]: value,
-    }));
+    setUser((prev) => {
+      if (!prev) {
+        return;
+      }
+      console.log(prev)
+      return {
+        ...prev,
+        [field]: value,
+      }
+    });
   }
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      setUserData(JSON.parse(localStorage.getItem('user')))
+      setUserData(JSON.parse(localStorage.getItem('user') as string))
       setStep(getFormStep());
     }
   }, [])
@@ -93,7 +104,7 @@ export default function Home() {
   )
 }
 
-export const getServerSideProps = async (ctx) => {
+export const getServerSideProps = wrapper.getServerSideProps(async (ctx: GetServerSidePropsContext & { store: Store<RootState, AnyAction> }) => {
   try {
     const user = await checkAuth(ctx);
 
@@ -112,4 +123,4 @@ export const getServerSideProps = async (ctx) => {
   } catch (error) {
 
   }
-}
+});

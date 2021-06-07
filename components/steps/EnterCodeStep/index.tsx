@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useContext, useState } from 'react'
 import { useRouter } from 'next/router';
 //React-Phone-Input-2
 import { Button } from '../../Button';
@@ -8,11 +8,13 @@ import { WhiteBlock } from '../../WhiteBlock'
 import axios from "../../../core/axios";
 
 import styles from './EnterCodeStep.module.scss';
+import { MainContext } from '../../../pages';
 export const EnterCodeStep = () => {
   const router = useRouter();
   const [isLoadig, setIsLoadig] = useState<boolean>(false);
   const [codes, setCodes] = useState<Array<number>>([]);
   const nextDisabled = codes.some((v) => !v) || codes.length < 4;
+  const { user } = useContext(MainContext);
 
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     const id = Number(e.target.getAttribute('id')) - 1;
@@ -34,8 +36,8 @@ export const EnterCodeStep = () => {
   const handleOnSubmit = async (code: string) => {
     try {
       setIsLoadig(true);
-      const info = await axios.get(`/auth/sms/activate?code=${code}`);
-      console.log('OVER HERE!', info);
+      console.log('USER', user);
+      await axios.post(`/auth/sms/activate`, { code, user });
       router.push('/rooms');
     } catch (err) {
       alert(err);

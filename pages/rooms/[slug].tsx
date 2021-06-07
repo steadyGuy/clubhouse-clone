@@ -1,15 +1,15 @@
 import clsx from 'clsx';
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Api } from '../../api';
 import { BackButton } from '../../components/BackButton';
 import { Header } from '../../components/Header/Header';
 import { Room } from '../../components/Room/Room';
-import axios from '../../core/axios';
+import { enhancedServerSideProps } from '../../utils/enhancedServerSideProps';
 
 export default function RoomPage({ room }) {
-  console.log('room', room)
+
   return (
     <>
       <Head>
@@ -24,10 +24,13 @@ export default function RoomPage({ room }) {
   )
 }
 
-export const getServerSideProps = async (ctx) => {
+export const getServerSideProps = enhancedServerSideProps(async (ctx) => {
   try {
-    const { slug } = ctx.query;
-    const room = await Api(ctx).getRoom(slug);
+    let { slug } = ctx.query;
+    if (!slug) {
+      slug = '1';
+    }
+    const room = await Api(ctx).getRoom(+slug as number);
     return {
       props: {
         room,
@@ -43,4 +46,4 @@ export const getServerSideProps = async (ctx) => {
       }
     }
   }
-}
+});
